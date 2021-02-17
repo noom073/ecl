@@ -104,8 +104,9 @@ class Main extends CI_Controller
     public function ajax_register_member()
     {
         $this->load->helper('string');
-        $this->load->model('main_model');
         $this->load->library('mail_lib');
+        $this->load->library('pdf_file');
+        $this->load->model('main_model');
 
         $mixRound           = explode(':', $this->input->post('round'));
         $data['round_id']   = $mixRound[0];
@@ -126,7 +127,7 @@ class Main extends CI_Controller
                 if ($insert['status']) { // IF INSERT REGISTER DATA COMPLETE
                     $result['data'] = $insert;
                     $data_register  = $this->main_model->get_seat_detail_registered($insert['seat_number'], $insert['round_id'])->row();
-                    $generatePDF    = $this->main_model->generate_pdf($data_register);
+                    $this->pdf_file->generate_pdf($data_register);
 
                     $file_name = FCPATH . "/assets/PDF_generate/{$data_register->idp}.pdf";
                     if (file_exists($file_name)) {
