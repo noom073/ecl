@@ -18,7 +18,6 @@ class Main extends CI_Controller
     public function index()
     {
         $this->load->model('main_model');
-
         $num = $this->main_model->get_round_test()->num_rows();
         if ($num > 0) {
             $data['round'] = $this->main_model->get_round_test()->row();

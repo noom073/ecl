@@ -33,6 +33,9 @@
                     <li id="admin-search" class="nav-item">
                         <a class="nav-link" href="<?= site_url('search/index') ?>">ค้นหาคะแนน</a>
                     </li> 
+                    <li id="admin-check-user" class="nav-item">
+                        <a class="nav-link" href="<?= site_url('Admin_check_user/index') ?>">ตรวจสอบผู้สมัครสอบ</a>
+                    </li>
                     <li id="admin-view-log" class="nav-item">
                         <a class="nav-link" href="<?= site_url('view_log/index') ?>">Log</a>
                     </li>                  

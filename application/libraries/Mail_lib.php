@@ -33,7 +33,7 @@ class Mail_lib
         $mail->MsgHTML($text);
         $mail->CharSet = "utf-8";
 
-        //send the message, check for errors
+        // CHECK SEND MAIL ERROR
         if (!$mail->send()) {
             // echo "Mailer Error: " . $mail->ErrorInfo;
             $send['status'] = false;

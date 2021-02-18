@@ -232,24 +232,24 @@
                 var d = data.registered.date_test.substring(8);
                 var date = `${d} ${m} ${y} ${data.registered.time_test}`;
 
-                var html = `<div>` +
-                    `<label>ยศ ชื่อ สกุล: </label><span> ${data.registered.name}</span>` +
-                    `</div>` +
-                    `<div>` +
-                    ` <label>สังกัด: </label><span> ${data.registered.unit_name}</span>` +
-                    `</div>` +
-                    `<div>` +
-                    `<label>วันเดือนปี เข้ารับการทดสอบ: </label><span class="text-danger"> ${date} น.</span>` +
-                    `</div>` +
-                    `<div>` +
-                    `<label>ลำดับที่นั่ง: </label><span> ${data.registered.seat_number}</span>` +
-                    `</div>` +
-                    `<div>` +
-                    `<label>สถานที่: </label><span class="text-danger"> ${data.registered.room_name}</span>` +
-                    `</div>` +
-                    `<div>` +
-                    `<button class="btn btn-danger clear-registered" data-rid="${data.registered.row_id}">ยกเลิกการลงทะเบียน</button>` +
-                    `</div>`;
+                var html = `<div>
+                    <label>ยศ ชื่อ สกุล: </label><span> ${data.registered.name}</span>
+                    </div>
+                    <div>
+                     <label>สังกัด: </label><span> ${data.registered.unit_name}</span>
+                    </div>
+                    <div>
+                        <label>วันเดือนปี เข้ารับการทดสอบ: </label><span class="text-danger"> ${date} น.</span>
+                    </div>
+                    <div>
+                        <label>ลำดับที่นั่ง: </label><span> ${data.registered.seat_number}</span>
+                    </div>
+                    <div>
+                        <label>สถานที่: </label><span class="text-danger"> ${data.registered.room_name}</span>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger clear-registered" data-rid="${data.registered.row_id}">ยกเลิกการลงทะเบียน</button>
+                    </div>`;
 
             } else if (data.status == 'not-register') {
                 if (data.room.length > 0) {
@@ -359,7 +359,12 @@
 
                         var html = set_detail_registered(data);
                         console.log(data);
-                        html += `<a href="<?= base_url('assets/PDF_generate/') ?>${data.registered.idp}.pdf" download="number.pdf">Download file ลงทะเบียน</a>`;
+                        html += `<div class="mt-3">
+                            <a href="<?= base_url('assets/PDF_generate/') ?>${data.registered.idp}.pdf" download="number.pdf">
+                                <img class="rounded" src="<?= base_url('assets/images/pdf-icon.png') ?>" width="25" height="25">
+                                Download file ลงทะเบียน
+                            </a>
+                        </div>`;
 
                         $("#check-registered-detail").html(html);
                     } else {
