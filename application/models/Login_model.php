@@ -34,21 +34,19 @@ class Login_model extends CI_Model {
         return $query;
     }
 
-    public function get_logout($token) {
-        $data['time_update']    = date("Y-m-d H:i:s");
-        $data['active']         = 'n';
+    // public function get_logout($token) {
+    //     $data['time_update']    = date("Y-m-d H:i:s");
+    //     $data['active']         = 'n';
+    //     $this->mysql->where('token', $token);
+    //     $query = $this->mysql->update('ecl2_token', $data);
+    //     return $query;
+    // }
 
-        $this->mysql->where('token', $token);
-        $query = $this->mysql->update('ecl2_token', $data);
+    // public function check_token($token) {
+    //     $this->mysql->where('token', $token);
+    //     $this->mysql->where('active', 'y');
+    //     $query = $this->mysql->get('ecl2_token');
 
-        return $query;
-    }
-
-    public function check_token($token) {
-        $this->mysql->where('token', $token);
-        $this->mysql->where('active', 'y');
-        $query = $this->mysql->get('ecl2_token');
-
-        return $query;
-    }
+    //     return $query;
+    // }
 }

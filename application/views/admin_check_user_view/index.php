@@ -21,7 +21,7 @@
                                 <?php } ?>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" id="check-user-form-btn" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
 
@@ -51,10 +51,13 @@
         $(".nav-item").removeClass('active');
         $("#admin-check-user.nav-item").addClass('active');
 
+
         $("#check-user-form").submit(function(event) {
             event.preventDefault();
             let formData = $(this).serialize();
-            console.log(formData);
+            $("#check-user-form-btn").prop('disabled', true);
+            $("#check-result").prop('class', '');
+            $("#check-result").html('Loading...');
             $.post({
                 url: '<?= site_url('admin_check_user/ajax_get_register_data_by_round') ?>',
                 data: formData,
@@ -89,6 +92,7 @@
                     $("#check-result").prop('class', 'alert alert-danger');
                     $("#check-result").html(html);
                 }
+                $("#check-user-form-btn").prop('disabled', false);
             }).fail((jhr, status, error) => console.error(jhr, status, error));
         });
 

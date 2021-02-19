@@ -14,8 +14,8 @@ class Manage_round extends CI_Controller
         $this->load->helper('url');
         $this->load->library('session_lib');
         $this->load->library('secure_lib');
-
-        $this->session_lib->check_session_age();
+        $tokenStatus = $this->session_lib->check_ecl_token();
+        if(!$tokenStatus) redirect('main/index');
     }
 
     public function index()
