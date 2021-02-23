@@ -77,6 +77,13 @@ class Auth_model extends CI_Model
         return $query;
     }
 
+    public function get_user_by_token($token)
+    {
+        $this->mysql->where('token', $token);
+        $query = $this->mysql->get('ecl2_token');
+        return $query;
+    }
+
     // public function get_user_id($token)
     // {
     //     $this->oracle->select('USER_ID');

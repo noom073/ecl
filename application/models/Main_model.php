@@ -303,7 +303,7 @@ class Main_model extends CI_Model
         $mixDate = explode('-', $date);
         $d = $mixDate[2];
         $m = $this->thai_month($mixDate[1]);
-        $y = $mixDate[0];
+        $y = $mixDate[0]+543;
         return "{$d} {$m} {$y}";        
     }
 }

@@ -5,7 +5,7 @@ class Score_model extends CI_Model {
 
     var $mysql, $oracle;
 
-    public function __construct(Type $var = null) {
+    public function __construct() {
         $this->mysql  = $this->load->database('mysql', true);
         $this->oracle = $this->load->database('person1', true);
     }

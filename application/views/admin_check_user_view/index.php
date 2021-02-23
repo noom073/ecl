@@ -63,28 +63,36 @@
                 data: formData,
                 dataType: 'json'
             }).done(res => {
-                if (res) {
-                    let y = parseInt(res.date_test.substring(0, 4)) + 543;
-                    let m = toThaiDate(res.date_test.substring(5, 7));
-                    let d = res.date_test.substring(8);
-                    let date = `${d} ${m} ${y} ${res.time_test}`;
+                if (res.data) {
+                    let y = parseInt(res.data.date_test.substring(0, 4)) + 543;
+                    let m = toThaiDate(res.data.date_test.substring(5, 7));
+                    let d = res.data.date_test.substring(8);
+                    let date = `${d} ${m} ${y} ${res.data.time_test}`;
                     let html = `
+                        <div>
+                            <img src="${res.image}" alt="personImage" width="150">
+                        </div>
                         <div><b>* พบข้อมูล</b></div>
                         <div>
-                            <label>ยศ ชื่อ สกุล:</label><span> ${res.name}</span>
+                            <label>ยศ ชื่อ สกุล:</label><span> ${res.data.name}</span>
                         </div>
                         <div>
-                            <label>สังกัด:</label><span> ${res.unit_name}</span>
+                            <label>สังกัด:</label><span> ${res.data.unit_name}</span>
                         </div>
                         <div>
                             <label>วันเดือนปี เข้ารับการทดสอบ:</label><span class="text-danger"> วันที่ ${date} น.</span>
                         </div>
                         <div>
-                            <label>ลำดับที่นั่ง:</label><span class="text-danger"> ${res.seat_number}</span>
+                            <label>ลำดับที่นั่ง:</label><span class="text-danger"> ${res.data.seat_number}</span>
                         </div>
                         <div>
-                            <label>สถานที่:</label><span class="text-danger"> ${res.room_name}</span>
-                        </div>`;
+                            <label>สถานที่:</label><span class="text-danger"> ${res.data.room_name}</span>
+                        </div>
+                        <div>
+                            <button id="tester-check-in" class="btn btn-success" data-row-id=${res.data.row_id}>Check In</button>
+                            <button id="cancel-check-in" class="btn btn-danger">Cancel</button>
+                        </div>
+                        `;
                     $("#check-result").prop('class', 'alert alert-success');
                     $("#check-result").html(html);
                 } else {
@@ -94,6 +102,36 @@
                 }
                 $("#check-user-form-btn").prop('disabled', false);
             }).fail((jhr, status, error) => console.error(jhr, status, error));
+        });
+
+
+        $(document).on('click', "#cancel-check-in", function() {
+            $("#check-user-form").trigger('reset');
+            $("#check-result").html('');
+            $("#check-result").prop('class', '');
+        });
+
+
+        $(document).on('click', "#tester-check-in", function() {
+            if (confirm('ยืนยันการ Check In ?')) {
+                let rowID = $(this).data('row-id');
+                $.post({
+                    url: '<?= site_url('admin_check_user/ajax_checkin_tester') ?>',
+                    data: {
+                        rowID: rowID
+                    },
+                    dataType: 'json'
+                }).done(res => {
+                    console.log(res);
+                    if (res.status) {
+                        alert('Check In สำเร็จ');
+                    } else {
+                        alert('!!! Check In ไม่สำเร็จ');                        
+                    }
+                }).fail((jhr, status, error) => console.error(jhr, status, error));
+            } else {
+
+            }
         });
 
     });

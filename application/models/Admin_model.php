@@ -93,5 +93,46 @@ class Admin_model extends CI_Model
         $query = $this->mysql->query($sql, array($roundID, $idp));
         return $query;
     }
+
+    public function update_checkin($rowID, $status, $updater)
+    {        
+        $this->mysql->set('checked', $status);
+        $this->mysql->set('user', "{$updater}#{$this->input->ip_address()}");
+        $this->mysql->set('time_update', date("Y-m-d H:i:s"));
+        $this->mysql->where('row_id', $rowID);
+        $query = $this->mysql->update('ecl2_register');
+        return $query;
+    }
+
+    public function tester_total()
+    {
+        $sql = "select a.round_id,
+            (
+                select count(*)
+                from ecl2_register
+                where round_id = a.round_id
+            ) as total_seat,
+            count(*) total_tester, 
+            (
+                select count(*)
+                from ecl2_register
+                where round_id = a.round_id
+                and checked like 'y'
+            ) as total_checkin,
+            b.date_test, b.time_test,
+            c.room_name 
+        from ecl2_register a
+        inner join ecl2_round b 
+            on a.round_id = b.row_id 
+        inner join ecl2_room c 
+            on b.room_id = c.row_id 
+        where a.idp is not null
+        group by a.round_id
+        order by b.row_id desc
+        ";
+
+        $query = $this->mysql->query($sql);
+        return $query;
+    }
     
 }

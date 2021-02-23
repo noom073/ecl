@@ -12,7 +12,7 @@ class Admin extends CI_Controller
         $this->load->library('secure_lib');
         $this->load->library('authentication');
         $tokenStatus = $this->session_lib->check_ecl_token();
-        if(!$tokenStatus) redirect('main/index');
+        if (!$tokenStatus) redirect('main/index');
     }
 
     public function index()
@@ -124,39 +124,52 @@ class Admin extends CI_Controller
         $this->load->view('foundation_view/admin_footer_view');
     }
 
-    public function check_tester_barcode()
+    public function tester_total()
     {
-        
+        $this->load->model('main_model');
+        $data['title'] = 'RTES';
+        $this->load->view('foundation_view/admin_header_view', $data);
+        $this->load->view('admin_view/tester_total', $data);
+        $this->load->view('foundation_view/admin_footer_view');
+    }
+    
+    public function ajax_tester_total()
+    {
+        $this->load->model('admin_model');
+        $result = $this->admin_model->tester_total()->result();
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
     }
 
-    public function check_tester_qrcode()
-    {
-        $query = $this->input->get('query', true);
-        $queryString = base64_decode($query);
-        parse_str($queryString, $data);
-        $idp = $data['idp'];
-        $round = $data['round'];
+    // public function check_tester_qrcode()
+    // {
+    //     $query = $this->input->get('query', true);
+    //     $queryString = base64_decode($query);
+    //     parse_str($queryString, $data);
+    //     $idp = $data['idp'];
+    //     $round = $data['round'];
 
-        $url = site_url('main/ajax_check_member_register');
-        $curlAD = curl_init();
-        curl_setopt($curlAD, CURLOPT_URL, $url);
-        curl_setopt($curlAD, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curlAD, CURLOPT_POST, true);
-        curl_setopt($curlAD, CURLOPT_POSTFIELDS, "idp={$idp}&round={$round}");
-        curl_setopt($curlAD, CURLOPT_CAINFO, FCPATH . "assets/ca/cacert.pem");
-        $output     = curl_exec($curlAD);
-        $curlErr    = curl_error($curlAD);
-        if ($curlErr) {
-            $curlData['status']  = false;
-            $curlData['errno']   = curl_errno($curlAD);
-            $curlData['error']   = curl_error($curlAD);
-        } else {
-            $curlData['status']     = true;
-            $curlData['http_code']  = curl_getinfo($curlAD, CURLINFO_HTTP_CODE);
-            $curlData['response']   = $output;
-        }
-        curl_close($curlAD);
-        $data = json_decode($curlData['response']);
-        var_dump($data);
-    }
+    //     $url = site_url('main/ajax_check_member_register');
+    //     $curlAD = curl_init();
+    //     curl_setopt($curlAD, CURLOPT_URL, $url);
+    //     curl_setopt($curlAD, CURLOPT_RETURNTRANSFER, true);
+    //     curl_setopt($curlAD, CURLOPT_POST, true);
+    //     curl_setopt($curlAD, CURLOPT_POSTFIELDS, "idp={$idp}&round={$round}");
+    //     curl_setopt($curlAD, CURLOPT_CAINFO, FCPATH . "assets/ca/cacert.pem");
+    //     $output     = curl_exec($curlAD);
+    //     $curlErr    = curl_error($curlAD);
+    //     if ($curlErr) {
+    //         $curlData['status']  = false;
+    //         $curlData['errno']   = curl_errno($curlAD);
+    //         $curlData['error']   = curl_error($curlAD);
+    //     } else {
+    //         $curlData['status']     = true;
+    //         $curlData['http_code']  = curl_getinfo($curlAD, CURLINFO_HTTP_CODE);
+    //         $curlData['response']   = $output;
+    //     }
+    //     curl_close($curlAD);
+    //     $data = json_decode($curlData['response']);
+    //     var_dump($data);
+    // }
 }

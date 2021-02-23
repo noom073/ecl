@@ -10,6 +10,7 @@ class Session_lib
         $this->CI = &get_instance();
         $this->CI->load->helper('cookie');
         $this->CI->load->library('session');
+        $this->CI->load->model('auth_model');
     }
 
     public function makeSecure($text, $type)
@@ -61,9 +62,21 @@ class Session_lib
         return $token;
     }
 
+    public function get_rtarf_token()
+    {
+        $token = get_cookie('rtarf-token', true);
+        return $token;
+    }
+
+    public function get_username_by_token()
+    {
+        $eclToken = $this->get_ecl_token();
+        $user = $this->CI->auth_model->get_user_by_token($eclToken)->row()->username;
+        return $user;
+    }
+
     public function check_ecl_token()
     {
-        $this->CI->load->model('auth_model');
         $eclToken = $this->get_ecl_token();
         $result = $this->CI->auth_model->get_ecl_token_from_db($eclToken);
         if ($result->num_rows()) {

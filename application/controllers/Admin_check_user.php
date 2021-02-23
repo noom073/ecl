@@ -31,10 +31,32 @@ class Admin_check_user extends CI_Controller
         $this->load->model('admin_model');
         $idp = $this->input->post('idp', true);
         $roundID = $this->input->post('roundID', true);
-        $data = $this->admin_model->get_register_data_by_round($idp, $roundID)->row();               
+        $result['data'] = $this->admin_model->get_register_data_by_round($idp, $roundID)->row(); 
+        $result['image'] = site_url('admin_check_user/get_person_image'."?idp={$idp}");
         $this->output
             ->set_content_type('application/json')
-            ->set_output(json_encode($data));
+            ->set_output(json_encode($result));
+    }
+
+    public function get_person_image()
+    {
+        $rtarfToken = $this->session_lib->get_rtarf_token();
+        $idp = $this->input->get('idp', true);
+        $url = "https://itdev.rtarf.mi.th/ecl/index.php/image";
+        $curlAD = curl_init();
+        curl_setopt($curlAD, CURLOPT_URL, $url);
+        curl_setopt($curlAD, CURLOPT_POST, true);
+        curl_setopt($curlAD, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlAD, CURLOPT_POSTFIELDS, "token={$rtarfToken}&per={$idp}");
+        curl_setopt($curlAD, CURLOPT_CAINFO, FCPATH . "assets/ca/cacert.pem");
+        $output = curl_exec($curlAD);
+        $curlErr = curl_error($curlAD);
+        if (!$curlErr) {
+            $this->output
+                ->set_content_type('image/jpeg')
+                ->set_output($output);
+        }
+        curl_close($curlAD);
     }
 
     public function check_tester_qrcode()
@@ -65,6 +87,24 @@ class Admin_check_user extends CI_Controller
         }
         curl_close($curlAD);
         $data = json_decode($curlData['response']);
-        var_dump($data);
+    }
+
+    public function ajax_checkin_tester()
+    {
+        $this->load->model('admin_model');
+        $eclToken   = $this->session_lib->get_ecl_token();
+        $updater    = $this->session_lib->get_username_by_token($eclToken);
+        $rowID      = $this->input->post('rowID', true);
+        $update     = $this->admin_model->update_checkin($rowID, 'y', $updater);
+        if ($update) {
+            $result['status'] = true;
+            $result['text'] = 'update ข้อมูลเรียบร้อย';
+        } else {
+            $result['status'] = false;
+            $result['text'] = 'update ข้อมูลไม่สำเร็จ';
+        }
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
     }
 }
