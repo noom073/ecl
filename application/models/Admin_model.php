@@ -95,7 +95,7 @@ class Admin_model extends CI_Model
     }
 
     public function update_checkin($rowID, $status, $updater)
-    {        
+    {
         $this->mysql->set('checked', $status);
         $this->mysql->set('user', "{$updater}#{$this->input->ip_address()}");
         $this->mysql->set('time_update', date("Y-m-d H:i:s"));
@@ -106,33 +106,89 @@ class Admin_model extends CI_Model
 
     public function tester_total()
     {
-        $sql = "select a.round_id,
-            (
-                select count(*)
-                from ecl2_register
-                where round_id = a.round_id
-            ) as total_seat,
+        $sql = "select b.row_id,
+            b.total_seat as total_seat,
             count(*) total_tester, 
             (
                 select count(*)
                 from ecl2_register
-                where round_id = a.round_id
+                where round_id = b.row_id
                 and checked like 'y'
             ) as total_checkin,
             b.date_test, b.time_test,
             c.room_name 
-        from ecl2_register a
-        inner join ecl2_round b 
-            on a.round_id = b.row_id 
+        from ecl2_round b
+        left join ecl2_register a
+            on b.row_id = a.round_id
+            and a.idp is not null
         inner join ecl2_room c 
             on b.room_id = c.row_id 
-        where a.idp is not null
-        group by a.round_id
-        order by b.row_id desc
-        ";
+        group by b.row_id 
+        order by b.date_test desc, b.time_test desc";
 
         $query = $this->mysql->query($sql);
         return $query;
     }
+
+    public function get_mail_users()
+    {
+        $this->mysql->where('status', 'y');
+        $query = $this->mysql->get('ecl2_mail_user');
+        return $query;
+    }
+
+    public function check_duplication_email_before_update($array)
+    {
+        $this->mysql->where('email', $array['rtarfMail']);
+        $this->mysql->where('status', 'y');
+        $this->mysql->not_like('row_id', $array['rowID']);
+        $query = $this->mysql->get('ecl2_mail_user');
+        return $query;
+    }
     
+    public function check_duplication_email($rtarfMail)
+    {
+        $this->mysql->where('email', $rtarfMail);
+        $this->mysql->where('status', 'y');
+        $query = $this->mysql->get('ecl2_mail_user');
+        return $query;
+    }
+
+    public function insert_admin($rtarfMail, $userUpdate)
+    {
+        $this->mysql->set('email', $rtarfMail);
+        $this->mysql->set('privilege', '0');
+        $this->mysql->set('time_update', date("Y-m-d H:i:s"));
+        $this->mysql->set('user_update', $userUpdate);
+        $this->mysql->set('status', 'y');
+        $query = $this->mysql->insert('ecl2_mail_user');
+        return $query;
+    }
+    
+    public function get_admin_detail($rowID)
+    {
+        $this->mysql->where('row_id', $rowID);
+        $query = $this->mysql->get('ecl2_mail_user');
+        return $query;
+    }
+
+    public function update_admin($array, $userUpdate)
+    {
+        $this->mysql->set('email', $array['rtarfMail']);
+        $this->mysql->set('time_update', date("Y-m-d H:i:s"));
+        $this->mysql->set('user_update', $userUpdate);
+        $this->mysql->where('row_id', $array['rowID']);
+        $query = $this->mysql->update('ecl2_mail_user');
+        return $query;
+    }
+
+    public function delete_admin($rowID, $userUpdate)
+    {
+        $this->mysql->set('time_update', date("Y-m-d H:i:s"));
+        $this->mysql->set('user_update', $userUpdate);
+        $this->mysql->set('status', 'n');
+        $this->mysql->where('row_id', $rowID);
+        $query = $this->mysql->update('ecl2_mail_user');
+        return $query;
+    }
 }

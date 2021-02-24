@@ -273,23 +273,29 @@ class Main extends CI_Controller
 
         $row_id = $this->secure_lib->makeSecure($this->input->post('row'), 'dec');
         $detail = $this->main_model->get_register_detail($row_id)->row_array();
-        $openedRound = $this->main_model->check_opened_round()->num_rows();
-        if ($openedRound != 0) {
-            $update = $this->main_model->cancel_registered($row_id);
-            if ($update) {
-                $result['status']   = true;
-                $result['text']     = "ยกเลิกการลงทะเบียน เรียบร้อย";
+        if ($detail['checked'] == 'n') {
+            $openedRound = $this->main_model->check_opened_round()->num_rows();
+            if ($openedRound != 0) {
+                $update = $this->main_model->cancel_registered($row_id);
+                if ($update) {
+                    $result['status']   = true;
+                    $result['text']     = "ยกเลิกการลงทะเบียน เรียบร้อย";
+                } else {
+                    $result['status']   = false;
+                    $result['text']     = "ยกเลิกการลงทะเบียน ไม่ได้";
+                }
+                $this->write_clear_seat($detail, $result);
             } else {
                 $result['status']   = false;
-                $result['text']     = "ยกเลิกการลงทะเบียน ไม่ได้";
+                $result['text']     = "ยกเลิกการลงทะเบียน ไม่ได้ เนื่องจากปิดการลงทะเบียนทุกห้องแล้ว";
             }
-            $this->write_clear_seat($detail, $result);
         } else {
             $result['status']   = false;
-            $result['text']     = "ยกเลิกการลงทะเบียน ไม่ได้ เนื่องจากปิดการลงทะเบียนทุกห้องแล้ว";
+            $result['text']     = "ยกเลิกการลงทะเบียน ไม่ได้ มีการ Check In ระบบแล้ว";
         }
-
-        echo json_encode($result);
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
     }
 
     private function write_send_mail_log($mailStatus, $data)

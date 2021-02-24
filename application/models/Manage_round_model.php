@@ -128,11 +128,11 @@ class Manage_round_model extends CI_Model
         $field['time_update']   = date("Y-m-d H:i:s");
         $field['user']          = "{$this->session->username}#{$this->input->ip_address()}";
 
-        $chkData['round'] = $field['round'];
-        $chkData['round_id'] = $field['round_id'];
+        $chkData['round_id'] = $array['round_id'];
+        $chkData['round']   = $field['round'];
         $chkData['room_id'] = $field['room_id'];
-        $chkData['date'] = $field['date_test'];
-        $chkData['time'] = $field['time_test'];
+        $chkData['date']    = $field['date_test'];
+        $chkData['time']    = $field['time_test'];
         $checkDuplicatRound = $this->check_dup_round_before_update($chkData)->num_rows();
         if ($checkDuplicatRound == 0) {
             $this->mysql->where('row_id', $array['round_id']);

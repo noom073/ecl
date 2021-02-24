@@ -266,7 +266,7 @@ class Main_model extends CI_Model
 
     public function get_register_detail($id)
     {
-        $this->mysql->select('a.idp, a.name, a.unit_name, a.seat_number,
+        $this->mysql->select('a.idp, a.name, a.unit_name, a.seat_number, a.checked,
             b.date_test, b.time_test, b.round,
             c.room_name');
         $this->mysql->join('ecl2_round b', 'a.round_id = b.row_id', 'left');
@@ -278,7 +278,7 @@ class Main_model extends CI_Model
         return $query;
     }
 
-    public function check_opened_round($var = null)
+    public function check_opened_round()
     {
         $this->mysql->where('active', 'y');
         $query = $this->mysql->get('ecl2_round');

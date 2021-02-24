@@ -61,8 +61,8 @@ $styleQRCode = array(
     'module_height' => 1 // height of a single module in points
 );
 $queryString = base64_encode('idp='.$obj->idp.'&round='. urlencode($obj->round));
-$url = site_url('admin_check_user/check_tester_qrcode?query='. $queryString);
-$pdf->write2DBarcode($url, 'QRCODE,H', 150, 125, 50, 50, $styleQRCode, 'N');
+// $url = site_url('admin_check_user/check_tester_qrcode?query='. $queryString);
+$pdf->write2DBarcode($obj->idp, 'QRCODE,H', 150, 125, 50, 50, $styleQRCode, 'N');
 
 $html = '<h2>คำชี้แจงและข้อปฏิบัติในการเข้ารับการทดสอบภาษาอังกฤษ</h2>
 <ol>

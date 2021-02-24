@@ -170,6 +170,7 @@
 
         function generate_datatable() {
             $("#ecl-table").DataTable({
+                responsive:true,
                 destroy: true,
                 ajax: {
                     url: "<?= site_url('manage_round/ajax_list_rounds') ?>",

@@ -181,7 +181,7 @@
 
         <!-- View round detail Modal -->
         <div class="modal fade" id="round-detail-Modal" tabindex="-1" role="dialog" aria-labelledby="round-detail-ModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="round-detail-ModalLabel">รายละเอียด ผู้ลงทะเบียน</h5>
@@ -213,9 +213,9 @@
                                     </thead>
                                 </table>
                             </div>
-                            <button type="button" class="btn btn-primary float-right m-1 submit-detail close-seat">ปิดที่นั่ง</button>
+                            <!-- <button type="button" class="btn btn-primary float-right m-1 submit-detail close-seat">ปิดที่นั่ง</button>
                             <button type="button" class="btn btn-primary float-right m-1 submit-detail open-seat">เปิดที่นั่ง</button>
-                            <button type="button" class="btn btn-primary float-right m-1 submit-detail clear-seat">ลบผู้ลงทะเบียน</button>
+                            <button type="button" class="btn btn-primary float-right m-1 submit-detail clear-seat">ลบผู้ลงทะเบียน</button> -->
                             <div id="rs-round-detail-form"></div>
                         </form>
 
@@ -259,6 +259,7 @@
 
         function generate_datatable() {
             $("#ecl-table").DataTable({
+                responsive:true,
                 destroy: true,
                 ajax: {
                     url: "<?= site_url('manage_round/ajax_list_rounds') ?>",
@@ -560,15 +561,6 @@
                             return date;
                         }
                     },
-                    // {
-                    //     data: 'confirm',
-                    //     className: "text-center",
-                    //     render: function(data, type, row, meta) {
-                    //         var confirm = (data == 'y') ? `<span class="text-success">ยืนยันแล้ว</span>` : `<span class="text-danger">ยังไม่ได้ยืนยัน</span>`;
-
-                    //         return confirm;
-                    //     }
-                    // },
                     {
                         data: 'active',
                         className: "text-center",
@@ -587,90 +579,90 @@
             });
         }
 
-        $(document).on("click", ".close-seat", function() { // click close seat 
-            $("#round-detail-loading").html(`กำลังโหลด...` +
-                `<div class="spinner-border text-primary" role="status">` +
-                `<span class="sr-only">Loading...</span>` +
-                `</div>`);
+        // $(document).on("click", ".close-seat", function() { // click close seat 
+        //     $("#round-detail-loading").html(`กำลังโหลด...` +
+        //         `<div class="spinner-border text-primary" role="status">` +
+        //         `<span class="sr-only">Loading...</span>` +
+        //         `</div>`);
 
-            var formData = $(this).parent("#round-detail-form").serialize();
-            var round_id = $(this).attr("data-round_id");
-            // console.log(formData);
+        //     var formData = $(this).parent("#round-detail-form").serialize();
+        //     var round_id = $(this).attr("data-round_id");
+        //     // console.log(formData);
 
-            $.ajax({
-                url: "<?= site_url('manage_round/ajax_close_seat') ?>",
-                data: formData,
-                type: "POST",
-                dataType: "json",
-                success: function(data) {
-                    generate_detail(round_id);
-                    generate_datatable();
-                    $("#round-detail-loading").html('');
-                },
-                error: function(jhx, status, error) {
-                    console.log(`${jhx}, ${status}, ${error}`);
-                }
-            });
-        });
+        //     $.ajax({
+        //         url: "<?= site_url('manage_round/ajax_close_seat') ?>",
+        //         data: formData,
+        //         type: "POST",
+        //         dataType: "json",
+        //         success: function(data) {
+        //             generate_detail(round_id);
+        //             generate_datatable();
+        //             $("#round-detail-loading").html('');
+        //         },
+        //         error: function(jhx, status, error) {
+        //             console.log(`${jhx}, ${status}, ${error}`);
+        //         }
+        //     });
+        // });
 
-        $(document).on("click", ".open-seat", function() { // click open seat 
-            $("#round-detail-loading").html(`กำลังโหลด...` +
-                `<div class="spinner-border text-primary" role="status">` +
-                `<span class="sr-only">Loading...</span>` +
-                `</div>`);
+        // $(document).on("click", ".open-seat", function() { // click open seat 
+        //     $("#round-detail-loading").html(`กำลังโหลด...` +
+        //         `<div class="spinner-border text-primary" role="status">` +
+        //         `<span class="sr-only">Loading...</span>` +
+        //         `</div>`);
 
-            var formData = $(this).parent("#round-detail-form").serialize();
-            var round_id = $(this).attr("data-round_id");
-            // console.log(formData);
+        //     var formData = $(this).parent("#round-detail-form").serialize();
+        //     var round_id = $(this).attr("data-round_id");
+        //     // console.log(formData);
 
-            $.ajax({
-                url: "<?= site_url('manage_round/ajax_open_seat') ?>",
-                data: formData,
-                type: "POST",
-                dataType: "json",
-                success: function(data) {
-                    generate_detail(round_id);
-                    generate_datatable();
-                    $("#round-detail-loading").html('');
-                },
-                error: function(jhx, status, error) {
-                    console.log(`${jhx}, ${status}, ${error}`);
-                }
-            });
-        });
+        //     $.ajax({
+        //         url: "<?= site_url('manage_round/ajax_open_seat') ?>",
+        //         data: formData,
+        //         type: "POST",
+        //         dataType: "json",
+        //         success: function(data) {
+        //             generate_detail(round_id);
+        //             generate_datatable();
+        //             $("#round-detail-loading").html('');
+        //         },
+        //         error: function(jhx, status, error) {
+        //             console.log(`${jhx}, ${status}, ${error}`);
+        //         }
+        //     });
+        // });
 
-        $(document).on("click", ".clear-seat", function() { // click clear seat 
-            $("#round-detail-loading").html(`กำลังโหลด...` +
-                `<div class="spinner-border text-primary" role="status">` +
-                `<span class="sr-only">Loading...</span>` +
-                `</div>`);
+        // $(document).on("click", ".clear-seat", function() { // click clear seat 
+        //     $("#round-detail-loading").html(`กำลังโหลด...` +
+        //         `<div class="spinner-border text-primary" role="status">` +
+        //         `<span class="sr-only">Loading...</span>` +
+        //         `</div>`);
 
-            var message = `ยืนยันการลบ ผู้ลงทะเบียน`;
-            if (confirm(message)) {
-                var formData = $(this).parent("#round-detail-form").serialize();
-                var round_id = $(this).attr("data-round_id");
+        //     var message = `ยืนยันการลบ ผู้ลงทะเบียน`;
+        //     if (confirm(message)) {
+        //         var formData = $(this).parent("#round-detail-form").serialize();
+        //         var round_id = $(this).attr("data-round_id");
 
-                $.ajax({
-                    url: "<?= site_url('manage_round/ajax_clear_seat') ?>",
-                    data: formData,
-                    type: "POST",
-                    dataType: "json",
-                    success: function(data) {
-                        generate_detail(round_id);
-                        generate_datatable();
-                        $("#round-detail-loading").html('');
-                    },
-                    error: function(jhx, status, error) {
-                        console.log(`${jhx}, ${status}, ${error}`);
-                    }
-                });
+        //         $.ajax({
+        //             url: "<?= site_url('manage_round/ajax_clear_seat') ?>",
+        //             data: formData,
+        //             type: "POST",
+        //             dataType: "json",
+        //             success: function(data) {
+        //                 generate_detail(round_id);
+        //                 generate_datatable();
+        //                 $("#round-detail-loading").html('');
+        //             },
+        //             error: function(jhx, status, error) {
+        //                 console.log(`${jhx}, ${status}, ${error}`);
+        //             }
+        //         });
 
-                return true;
-            } else {
-                $("#round-detail-loading").html('');
-                return false;
-            }
-        });
+        //         return true;
+        //     } else {
+        //         $("#round-detail-loading").html('');
+        //         return false;
+        //     }
+        // });
 
         $(document).on("click", ".disable-round", function() { // click clear seat  
             var round_id = $(this).attr("data-round_id");

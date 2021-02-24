@@ -449,22 +449,17 @@
                     success: function(data) {
                         console.log(data);
                         if (data.status == true) {
-
                             this_button.parent().parent().attr('class', 'my-2 alert alert-success');
                             this_button.parent().parent().html(`${data.text}`);
-
                             $("#rs-register-form").html('');
                             $("#rs-register-form").attr('class', '');
-
                         } else {
                             $("#rs-register-detail").html('');
-
                             $("#rs-register-form").html('');
                             $("#rs-register-form").attr('class', 'my-2 alert alert-danger');
                             $("#rs-register-form").html(`! ${data.text}`);
-
                             $("#check-registered-detail").html('');
-                            $("#check-registered-detail").attr('class', 'my-2 alert alert-success');
+                            $("#check-registered-detail").attr('class', 'my-2 alert alert-danger');
                             $("#check-registered-detail").html(`${data.text}`);
                         }
                     },

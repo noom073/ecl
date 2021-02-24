@@ -39,6 +39,9 @@
                     <li id="admin-tester-total" class="nav-item">
                         <a class="nav-link" href="<?= site_url('admin/tester_total') ?>">สรุปจำนวนผู้สมัครสอบ</a>
                     </li>
+                    <li id="admin-manage-user" class="nav-item">
+                        <a class="nav-link" href="<?= site_url('admin/manage_user') ?>">จัดการรายชื่อ Admin</a>
+                    </li>
                     <li id="admin-view-log" class="nav-item">
                         <a class="nav-link" href="<?= site_url('view_log/index') ?>">Log</a>
                     </li>                  

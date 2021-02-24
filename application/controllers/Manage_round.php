@@ -15,7 +15,7 @@ class Manage_round extends CI_Controller
         $this->load->library('session_lib');
         $this->load->library('secure_lib');
         $tokenStatus = $this->session_lib->check_ecl_token();
-        if(!$tokenStatus) redirect('main/index');
+        if (!$tokenStatus) redirect('main/index');
     }
 
     public function index()
@@ -121,8 +121,9 @@ class Manage_round extends CI_Controller
             $result['status']   = false;
             $result['text']     = 'บันทึกข้อมูลไม่ได้';
         }
-
-        echo json_encode($result);
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
     }
 
     public function ajax_get_registered_data()
@@ -141,79 +142,77 @@ class Manage_round extends CI_Controller
         echo json_encode($info);
     }
 
-    public function ajax_close_seat()
-    {
-        $this->load->model('manage_round_model');
+    // public function ajax_close_seat()
+    // {
+    //     $this->load->model('manage_round_model');
 
-        $seat = $this->input->post('seat');
-        if ($seat != null) {
-            foreach ($seat as $id) {
-                $seat_id = $this->secure_lib->makeSecure($id, 'dec');
-                $update = $this->manage_round_model->disable_seat($seat_id);
+    //     $seat = $this->input->post('seat');
+    //     if ($seat != null) {
+    //         foreach ($seat as $id) {
+    //             $seat_id = $this->secure_lib->makeSecure($id, 'dec');
+    //             $update = $this->manage_round_model->disable_seat($seat_id);
 
-                if ($update) {
-                    $data['pass'][] = $seat_id;
-                } else {
-                    $data['fail'][] = $seat_id;
-                }
-            }
-        } else {
-            $data['pass'][] = '';
-            $data['fail'][] = '';
-        }
+    //             if ($update) {
+    //                 $data['pass'][] = $seat_id;
+    //             } else {
+    //                 $data['fail'][] = $seat_id;
+    //             }
+    //         }
+    //     } else {
+    //         $data['pass'][] = '';
+    //         $data['fail'][] = '';
+    //     }
+    //     echo json_encode($data);
+    // }
 
+    // public function ajax_open_seat()
+    // {
+    //     $this->load->model('manage_round_model');
 
-        echo json_encode($data);
-    }
+    //     $seat = $this->input->post('seat');
+    //     if ($seat != null) {
+    //         foreach ($seat as $id) {
+    //             $seat_id = $this->secure_lib->makeSecure($id, 'dec');
+    //             $update = $this->manage_round_model->enable_seat($seat_id);
 
-    public function ajax_open_seat()
-    {
-        $this->load->model('manage_round_model');
+    //             if ($update) {
+    //                 $data['pass'][] = $seat_id;
+    //             } else {
+    //                 $data['fail'][] = $seat_id;
+    //             }
+    //         }
+    //     } else {
+    //         $data['pass'][] = '';
+    //         $data['fail'][] = '';
+    //     }
 
-        $seat = $this->input->post('seat');
-        if ($seat != null) {
-            foreach ($seat as $id) {
-                $seat_id = $this->secure_lib->makeSecure($id, 'dec');
-                $update = $this->manage_round_model->enable_seat($seat_id);
+    //     echo json_encode($data);
+    // }
 
-                if ($update) {
-                    $data['pass'][] = $seat_id;
-                } else {
-                    $data['fail'][] = $seat_id;
-                }
-            }
-        } else {
-            $data['pass'][] = '';
-            $data['fail'][] = '';
-        }
+    // public function ajax_clear_seat()
+    // {
+    //     $this->load->model('manage_round_model');
 
-        echo json_encode($data);
-    }
+    //     $seat = $this->input->post('seat');
+    //     if ($seat != null) {
+    //         foreach ($seat as $id) {
+    //             $seat_id = $this->secure_lib->makeSecure($id, 'dec');
+    //             $this->write_clear_seat($seat_id);
+    //             $update = $this->manage_round_model->clear_seat($seat_id);
 
-    public function ajax_clear_seat()
-    {
-        $this->load->model('manage_round_model');
+    //             if ($update) {
+    //                 $data['pass'][] = $seat_id;
+    //             } else {
+    //                 $data['fail'][] = $seat_id;
+    //             }
+    //         }
+    //     } else {
+    //         $data['pass'][] = '';
+    //         $data['fail'][] = '';
+    //     }
 
-        $seat = $this->input->post('seat');
-        if ($seat != null) {
-            foreach ($seat as $id) {
-                $seat_id = $this->secure_lib->makeSecure($id, 'dec');
-                $this->write_clear_seat($seat_id);
-                $update = $this->manage_round_model->clear_seat($seat_id);
-
-                if ($update) {
-                    $data['pass'][] = $seat_id;
-                } else {
-                    $data['fail'][] = $seat_id;
-                }
-            }
-        } else {
-            $data['pass'][] = '';
-            $data['fail'][] = '';
-        }
-
-        echo json_encode($data);
-    }
+    //     echo json_encode($data);
+    // }
 
     public function ajax_disable_round()
     {

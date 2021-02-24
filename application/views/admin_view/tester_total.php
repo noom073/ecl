@@ -2,7 +2,7 @@
     <div class="main container-fluid">
         <div class="">
             <div class="bg-white m-2 p-2">
-                <div class="h2">รายการห้องสอบ</div>
+                <div class="h2">สรุปจำนวนผู้เข้าสอบ</div>
                 <div class="">
                     <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#create-roomModal">+ เพิ่มห้องสอบ</button>
                 </div>

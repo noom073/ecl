@@ -27,7 +27,8 @@ class Auth_model extends CI_Model
     {
         $sql = "select *
             from ecl2_mail_user
-            where email = ?";
+            where email = ?
+            and status = 'y'";
         $query = $this->mysql->query($sql, array($rtarfMail));
         return $query;
     }

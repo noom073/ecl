@@ -132,11 +132,111 @@ class Admin extends CI_Controller
         $this->load->view('admin_view/tester_total', $data);
         $this->load->view('foundation_view/admin_footer_view');
     }
-    
+
     public function ajax_tester_total()
     {
         $this->load->model('admin_model');
         $result = $this->admin_model->tester_total()->result();
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+    }
+
+    public function manage_user()
+    {
+        $this->load->model('main_model');
+        $data['title'] = 'RTES';
+        $this->load->view('foundation_view/admin_header_view', $data);
+        $this->load->view('admin_view/admin_manage_user', $data);
+        $this->load->view('foundation_view/admin_footer_view');
+    }
+
+    public function ajax_list_admin()
+    {
+        $this->load->model('admin_model');
+        $result = $this->admin_model->get_mail_users()->result();
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+    }
+
+    public function ajax_add_admin()
+    {
+        $this->load->model('admin_model');
+        $input = $this->input->post('email', true);
+        $mixInput = explode('@', $input);
+        $rtarfMail = $mixInput[0] . '@rtarf.mi.th';
+        $checkDuplicationEmail = $this->admin_model->check_duplication_email($rtarfMail);
+        if ($checkDuplicationEmail->num_rows() == 0) {
+            $userUpdate = $this->session_lib->get_username_by_token();
+            $insert = $this->admin_model->insert_admin($rtarfMail, $userUpdate);
+            if ($insert) {
+                $result['status'] = true;
+                $result['text'] = "บันทึกสำเร็จ";
+            } else {
+                $result['status'] = false;
+                $result['text'] = "บันทึกไม่สำเร็จ";
+            }
+        } else {
+            $result['status'] = false;
+            $result['text'] = "มี Email ซ้ำ";
+        }
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+    }
+
+    public function ajax_admin_detail()
+    {
+        $this->load->model('admin_model');
+        $rowID = $this->input->post('rowID', true);
+        $result = $this->admin_model->get_admin_detail($rowID)->row();
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+    }
+
+    public function ajax_edit_admin()
+    {
+        $this->load->model('admin_model');
+        $email = $this->input->post('email', true);
+        $rowID = $this->input->post('rowID', true);
+        $mixInput = explode('@', $email);
+        $input['rtarfMail'] = $mixInput[0] . '@rtarf.mi.th';
+        $input['rowID'] = $rowID;
+        $checkDuplicationEmail = $this->admin_model->check_duplication_email_before_update($input);
+        if ($checkDuplicationEmail->num_rows() == 0) {
+            $userUpdate = $this->session_lib->get_username_by_token();
+            $update = $this->admin_model->update_admin($input, $userUpdate, 'y');
+            if ($update) {
+                $result['status'] = true;
+                $result['text'] = "บันทึกสำเร็จ";
+            } else {
+                $result['status'] = false;
+                $result['text'] = "บันทึกไม่สำเร็จ";
+            }
+        } else {
+            $result['status'] = false;
+            $result['text'] = "มี Email ซ้ำ";
+        }
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+    }
+
+    public function ajax_delete_admin()
+    {
+        $this->load->model('admin_model');
+        $rowID = $this->input->post('rowID', true);
+        $userUpdate = $this->session_lib->get_username_by_token();
+        $delete = $this->admin_model->delete_admin($rowID, $userUpdate);
+        if ($delete) {
+            $result['status'] = true;
+            $result['text'] = "ลบข้อมูลสำเร็จ";
+        } else {
+            $result['status'] = false;
+            $result['text'] = "ลบข้อมูลไม่สำเร็จ";
+        }
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($result));
