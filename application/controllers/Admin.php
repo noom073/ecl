@@ -249,6 +249,7 @@ class Admin extends CI_Controller
     //     parse_str($queryString, $data);
     //     $idp = $data['idp'];
     //     $round = $data['round'];
+    
 
     //     $url = site_url('main/ajax_check_member_register');
     //     $curlAD = curl_init();
