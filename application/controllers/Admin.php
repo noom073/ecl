@@ -139,7 +139,11 @@ class Admin extends CI_Controller
     {
         $this->load->model('admin_model');
         $round = $this->input->post('round', true);
-        $result = $this->admin_model->tester_total($round)->result();
+        if ($round == '') {
+            $result = [];
+        } else {
+            $result = $this->admin_model->tester_total($round)->result();
+        }
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($result));
