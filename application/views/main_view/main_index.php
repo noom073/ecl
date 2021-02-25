@@ -141,7 +141,7 @@
     #marq span {
         display: inline-block;
         padding-left: 100%;
-        animation: mymarq 35s linear infinite;
+        animation: mymarq 50s linear infinite;
     }
 
     #marq span:hover {

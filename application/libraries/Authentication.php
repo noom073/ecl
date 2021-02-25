@@ -85,8 +85,8 @@ class Authentication
                     if ($checkToken->num_rows() == 0) { // CHECK TOKEN DUPLICATE
                         $insertToken = $this->CI->auth_model->insert_token($token, $user['email']);
                         if ($insertToken) { // CHECK INSERT TOKEN
-                            set_cookie('ecl-token', $token, 0);
-                            set_cookie('rtarf-token', $ADToken->TOKEN, 0);
+                            set_cookie('ecl-token', $token, 3600);
+                            set_cookie('rtarf-token', $ADToken->TOKEN, 3600);
                             $data['nameth']     = $ADData->BIOG_NAME;
                             $data['nameen']     = $ADData->BIOG_NAME_ENG;
                             $data['email']      = $ADData->EMAIL;

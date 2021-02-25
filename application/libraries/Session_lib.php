@@ -82,7 +82,7 @@ class Session_lib
         if ($result->num_rows()) {
             $status =  true;
         } else {
-            $status =  true;
+            $status =  false;
         }
         return $status;
     }
