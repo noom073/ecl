@@ -150,7 +150,11 @@ class CI_DB_pdo_firebird_forge extends CI_DB_pdo_forge {
 			if ( ! empty($field[$i]['default']))
 			{
 				$sqls[] = $sql.' ALTER COLUMN '.$this->db->escape_identifiers($field[$i]['name'])
+<<<<<<< HEAD
 					.' SET '.$field[$i]['default'];
+=======
+					.' SET DEFAULT '.$field[$i]['default'];
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 			}
 
 			if (isset($field[$i]['null']))

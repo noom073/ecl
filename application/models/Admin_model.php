@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin_model extends CI_Model
@@ -8,37 +9,66 @@ class Admin_model extends CI_Model
 
     public function __construct()
     {
+=======
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Admin_model extends CI_Model {
+
+    var $mysql, $oracle;
+
+    public function __construct(Type $var = null) {
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->mysql  = $this->load->database('mysql', true);
         $this->oracle = $this->load->database('person1', true);
     }
 
 
+<<<<<<< HEAD
     public function list_rooms()
     {
+=======
+    public function list_rooms() {
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $query = $this->mysql->get('ecl2_room');
 
         return $query;
     }
 
+<<<<<<< HEAD
     public function check_dup_room($array)
     {
         $this->mysql->where('room_name', $array['room_name']);
+=======
+    public function check_dup_room($array) {
+        $this->mysql->where('room_name', $array['room_name']);        
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $query = $this->mysql->get('ecl2_room');
 
         return $query;
     }
 
+<<<<<<< HEAD
     public function check_room_before_update($array)
     {
         $this->mysql->where('room_name', $array['room_name']);
         $this->mysql->where('row_id <>', $array['row_id']);
+=======
+    public function check_room_before_update($array) {
+        $this->mysql->where('room_name', $array['room_name']);        
+        $this->mysql->where('row_id <>', $array['row_id']);        
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $query = $this->mysql->get('ecl2_room');
         // echo $this->mysql->last_query();
         return $query;
     }
+<<<<<<< HEAD
 
     public function insert_room($array)
     {
+=======
+    
+    public function insert_room($array) {
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $field['room_name']     = $array['room_name'];
         $field['address']       = $array['address'];
         $field['time_create']   = date("Y-m-d H:i:s");
@@ -48,8 +78,12 @@ class Admin_model extends CI_Model
 
         return $query;
     }
+<<<<<<< HEAD
     public function update_room($array)
     {
+=======
+    public function update_room($array) {
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $field['room_name']     = $array['room_name'];
         $field['address']       = $array['address'];
         $field['time_update']   = date("Y-m-d H:i:s");
@@ -61,21 +95,30 @@ class Admin_model extends CI_Model
         return $query;
     }
 
+<<<<<<< HEAD
     public function check_room_in_round($row_id)
     {
+=======
+    public function check_room_in_round($row_id) {
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->mysql->where('room_id', $row_id);
         $query = $this->mysql->get('ecl2_round');
 
         return $query;
     }
 
+<<<<<<< HEAD
     public function delete_room($row_id)
     {
+=======
+    public function delete_room($row_id) {
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->mysql->where('row_id', $row_id);
         $query = $this->mysql->delete('ecl2_room');
 
         return $query;
     }
+<<<<<<< HEAD
 
     public function get_register_data_by_round($idp, $roundID)
     {
@@ -192,3 +235,6 @@ class Admin_model extends CI_Model
         return $query;
     }
 }
+=======
+}
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b

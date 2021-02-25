@@ -133,7 +133,11 @@ class CI_DB_pdo_result extends CI_DB_result {
 
 				$retval[$i]			= new stdClass();
 				$retval[$i]->name		= $field['name'];
+<<<<<<< HEAD
 				$retval[$i]->type		= isset($field['native_type']) ? $field['native_type'] : null;
+=======
+				$retval[$i]->type		= $field['native_type'];
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 				$retval[$i]->max_length		= ($field['len'] > 0) ? $field['len'] : NULL;
 				$retval[$i]->primary_key	= (int) ( ! empty($field['flags']) && in_array('primary_key', $field['flags'], TRUE));
 			}

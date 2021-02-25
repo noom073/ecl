@@ -381,7 +381,11 @@ class CI_DB_result {
 	 */
 	public function custom_row_object($n, $type)
 	{
+<<<<<<< HEAD
 		isset($this->custom_result_object[$type]) OR $this->custom_result_object[$type] = $this->custom_result_object($type);
+=======
+		isset($this->custom_result_object[$type]) OR $this->custom_result_object($type);
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 
 		if (count($this->custom_result_object[$type]) === 0)
 		{

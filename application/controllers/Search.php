@@ -10,8 +10,13 @@ class Search extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('session_lib');
         $this->load->library('secure_lib');
+<<<<<<< HEAD
         $tokenStatus = $this->session_lib->check_ecl_token();
         if(!$tokenStatus) redirect('main/index');
+=======
+
+        $this->session_lib->check_session_age();
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
     }
 
 	public function index() {

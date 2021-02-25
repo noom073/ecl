@@ -279,7 +279,11 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 	 */
 	protected function _list_tables($prefix_limit = FALSE)
 	{
+<<<<<<< HEAD
 		$sql = 'SHOW TABLES FROM '.$this->_escape_char.$this->database.$this->_escape_char;
+=======
+		$sql = 'SHOW TABLES';
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 
 		if ($prefix_limit === TRUE && $this->dbprefix !== '')
 		{

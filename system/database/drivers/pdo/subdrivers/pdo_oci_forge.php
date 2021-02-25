@@ -74,6 +74,7 @@ class CI_DB_pdo_oci_forge extends CI_DB_pdo_forge {
 	 */
 	protected $_unsigned		= FALSE;
 
+<<<<<<< HEAD
 	/**
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
@@ -81,6 +82,8 @@ class CI_DB_pdo_oci_forge extends CI_DB_pdo_forge {
 	 */
 	protected $_null		= 'NULL';
 
+=======
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 	// --------------------------------------------------------------------
 
 	/**

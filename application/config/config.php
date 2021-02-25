@@ -23,7 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+<<<<<<< HEAD
 $config['base_url'] = 'http://localhost/ecl/product/web';
+=======
+$config['base_url'] = '//rtes.rtarf.mi.th';
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 
 /*
 |--------------------------------------------------------------------------
@@ -136,8 +140,12 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
+<<<<<<< HEAD
 // $config['composer_autoload'] = FALSE;
 $config['composer_autoload'] = FCPATH.'/vendor/autoload.php';
+=======
+$config['composer_autoload'] = TRUE;
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 
 /*
 |--------------------------------------------------------------------------
@@ -325,7 +333,11 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
+<<<<<<< HEAD
 $config['encryption_key'] = 'RtEs-EcL';
+=======
+$config['encryption_key'] = '256e3abd906d826aeb357bacb762132c93043a44da';
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 
 /*
 |--------------------------------------------------------------------------
@@ -402,10 +414,17 @@ $config['sess_regenerate_destroy'] = FALSE;
 |
 */
 $config['cookie_prefix']	= '';
+<<<<<<< HEAD
 $config['cookie_domain']	= 'localhost';
 $config['cookie_path']		= '/ecl/product/web/';
 $config['cookie_secure']	= FALSE;
 $config['cookie_httponly'] 	= TRUE;
+=======
+$config['cookie_domain']	= '';
+$config['cookie_path']		= '/';
+$config['cookie_secure']	= FALSE;
+$config['cookie_httponly'] 	= FALSE;
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 
 /*
 |--------------------------------------------------------------------------

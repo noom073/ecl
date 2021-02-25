@@ -247,11 +247,19 @@ class CI_Log {
 	 * @param	string	$level 	The error level
 	 * @param	string	$date 	Formatted date string
 	 * @param	string	$message 	The log message
+<<<<<<< HEAD
 	 * @return	string	Formatted log line with a new line character at the end
 	 */
 	protected function _format_line($level, $date, $message)
 	{
 		return $level.' - '.$date.' --> '.$message.PHP_EOL;
+=======
+	 * @return	string	Formatted log line with a new line character '\n' at the end
+	 */
+	protected function _format_line($level, $date, $message)
+	{
+		return $level.' - '.$date.' --> '.$message."\n";
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 	}
 
 	// --------------------------------------------------------------------

@@ -5,7 +5,11 @@ class Search_model extends CI_Model {
 
     var $mysql;
 
+<<<<<<< HEAD
     public function __construct() {
+=======
+    public function __construct(Type $var = null) {
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->mysql  = $this->load->database('mysql', true);
     }
 

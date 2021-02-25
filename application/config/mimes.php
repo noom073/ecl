@@ -140,7 +140,11 @@ return array(
 	'f4v'   =>	array('video/mp4', 'video/x-f4v'),
 	'flv'	=>	'video/x-flv',
 	'webm'	=>	'video/webm',
+<<<<<<< HEAD
 	'aac'   =>	array('audio/x-aac', 'audio/aac'),
+=======
+	'aac'   =>	'audio/x-acc',
+>>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 	'm4u'   =>	'application/vnd.mpegurl',
 	'm3u'   =>	'text/plain',
 	'xspf'  =>	'application/xspf+xml',
