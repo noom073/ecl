@@ -104,11 +104,15 @@ class Admin_model extends CI_Model
         return $query;
     }
 
-    public function tester_total()
+    public function tester_total($round)
     {
         $sql = "select b.row_id,
             b.total_seat as total_seat,
-            count(*) total_tester, 
+            (
+                select count(*)
+                from ecl2_register
+                where round_id = b.row_id
+            ) as total_tester, 
             (
                 select count(*)
                 from ecl2_register
@@ -123,10 +127,11 @@ class Admin_model extends CI_Model
             and a.idp is not null
         inner join ecl2_room c 
             on b.room_id = c.row_id 
+        where b.round like ?
         group by b.row_id 
         order by b.date_test desc, b.time_test desc";
 
-        $query = $this->mysql->query($sql);
+        $query = $this->mysql->query($sql, array($round));
         return $query;
     }
 
@@ -189,6 +194,16 @@ class Admin_model extends CI_Model
         $this->mysql->set('status', 'n');
         $this->mysql->where('row_id', $rowID);
         $query = $this->mysql->update('ecl2_mail_user');
+        return $query;
+    }
+
+    public function get_round_list()
+    {
+        $sql = "select distinct round
+            from ecl2_round
+            where round not like ''
+            order by round desc";
+        $query = $this->mysql->query($sql);
         return $query;
     }
 }

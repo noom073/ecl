@@ -4,11 +4,22 @@
             <div class="bg-white m-2 p-2">
                 <div class="h2">สรุปจำนวนผู้เข้าสอบ</div>
                 <div class="">
-                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#create-roomModal">+ เพิ่มห้องสอบ</button>
                 </div>
             </div>
 
             <div class="m-2 p-2">
+                <div class="mb-3">
+                    <div class="col-md-4">
+                        <label>รอบที่</label>
+                        <select name="round" class="form-control" id="round-select">
+                            <option value="">ระบุรอบ</option>
+                            <?php foreach ($round as $r) { ?>
+                                <option value="<?= $r->round ?>"><?= $r->round ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="h3 text-center" id="search-result"></div>
+                </div>
                 <div class="table-responsive">
                     <table id="ecl-table" class="table table-striped">
                         <thead>
@@ -51,157 +62,62 @@
         $(".nav-item").removeClass('active');
         $("#admin-tester-total.nav-item").addClass('active');
 
-        function generate_datatable() {
-            $("#ecl-table").DataTable({
-                destroy: true,
-                ajax: {
-                    url: "<?= site_url('admin/ajax_tester_total') ?>",
-                    dataSrc: ""
-                },
-                columns: [{
-                        data: null,
-                        className: "text-center",
-                        render: function(data, type, row, meta) {
-                            return meta.row + 1;
-                        }
-                    },
-                    {
-                        data: null,
-                        render: (data, type, row, meta) => {
-                            let y = parseInt(row.date_test.substring(0, 4)) + 543;
-                            let m = toThaiDate(row.date_test.substring(5, 7));
-                            let d = row.date_test.substring(8);
-                            let date = `${d} ${m} ${y} ${row.time_test}`;
-                            return `${date} ${row.room_name}`;
-                        }
-                    },
-                    {
-                        data: 'total_seat',
-                        className: "text-center"
-                    },
-                    {
-                        data: 'total_tester',
-                        className: "text-center"
-                    },
-                    {
-                        data: 'total_checkin',
-                        className: "text-center"
-                    }
-                ]
-            });
-        }
 
-        generate_datatable();
-
-        $("#create-room-form").submit(function() {
-            var formData = $(this).serialize();
-            console.log(formData);
-            $.ajax({
-                url: "<?= site_url('admin/ajax_create_room') ?>",
-                data: formData,
-                type: "POST",
-                dataType: "json",
-                success: function(data) {
-                    console.log(data);
-                    if (data.status) {
-                        $("#rs").html('');
-                        $("#rs").attr('class', 'alert alert-success');
-                        $("#rs").html(data.text);
-
-                        generate_datatable();
-                    } else {
-                        $("#rs").html('');
-                        $("#rs").attr('class', 'alert alert-danger');
-                        $("#rs").html(`!Error ${data.text}`);
+        let dataTable = $("#ecl-table").DataTable({
+            responsive: true,
+            columns: [{
+                    data: null,
+                    className: "text-center",
+                    render: function(data, type, row, meta) {
+                        return meta.row + 1;
                     }
                 },
-                error: function(jhx, status, error) {
-                    console.log(`${jhx}, ${status}, ${error}`);
+                {
+                    data: null,
+                    render: (data, type, row, meta) => {
+                        let y = parseInt(row.date_test.substring(0, 4)) + 543;
+                        let m = toThaiDate(row.date_test.substring(5, 7));
+                        let d = row.date_test.substring(8);
+                        let date = `${d} ${m} ${y} ${row.time_test}`;
+                        return `${date} ${row.room_name}`;
+                    }
+                },
+                {
+                    data: 'total_seat',
+                    className: "text-center"
+                },
+                {
+                    data: 'total_tester',
+                    className: "text-center"
+                },
+                {
+                    data: 'total_checkin',
+                    className: "text-center"
                 }
-            });
-
-            return false;
+            ]
         });
 
-        $(document).on("click", ".edit-room", function() {
-            var id = $(this).siblings(".id").val();
-            var room_name = $(this).siblings(".room_name").val();
-            var address = $(this).siblings(".address").val();
 
-            $("form#edit-room-form").find("input[name='edit_room_name']").val(room_name);
-            $("form#edit-room-form").find("input[name='edit_address']").val(address);
-            $("form#edit-room-form").find("input[name='edit_enc_id']").val(id);
-
-            $("#rs-edit-room").html('');
-            $("#rs-edit-room").attr('class', '');
-
-            $("#edit-roomModal").modal();
-        });
-
-        $("#edit-room-form").submit(function() {
-
-            var formData = $(this).serialize();
-            $.ajax({
-                url: "<?= site_url('admin/ajax_update_room') ?>",
-                data: formData,
-                type: "POST",
-                dataType: "json",
-                success: function(data) {
-                    console.log(data);
-                    if (data.status) {
-                        $("#rs-edit-room").html('');
-                        $("#rs-edit-room").attr('class', 'alert alert-success');
-                        $("#rs-edit-room").html(data.text);
-
-                        generate_datatable();
-                    } else {
-                        $("#rs-edit-room").html('');
-                        $("#rs-edit-room").attr('class', 'alert alert-danger');
-                        $("#rs-edit-room").html(`!Error ${data.text}`);
-                    }
+        const getTesterTotal = round => {
+            return $.post({
+                url: '<?= site_url('admin/ajax_tester_total') ?>',
+                data: {
+                    round: round
                 },
-                error: function(jhx, status, error) {
-                    console.log(`${jhx}, ${status}, ${error}`);
-                }
-            });
+                dataType: 'json'
+            }).done().fail((jhr, status, error) => console.error(jhr, status, error));
+        };
 
-            return false;
+
+        $("#round-select").change(async function() {
+            $("#search-result").text('Loading...');
+            dataTable.clear().draw();
+            let round = $(this).val();
+            console.log(round);
+            let testerTotal = await getTesterTotal(round);
+            dataTable.rows.add(testerTotal).draw();
+            $("#search-result").text('');
         });
 
-        $("#del-room").click(function() {
-            var message = "ยืนยันการลบห้องสอบ ?";
-
-            if (confirm(message)) {
-                var id = $("input[name='edit_enc_id']").val();
-
-                $.ajax({
-                    url: "<?= site_url('admin/ajax_delete_room') ?>",
-                    data: {
-                        enc_id: id
-                    },
-                    type: "POST",
-                    dataType: "json",
-                    success: function(data) {
-                        console.log(data);
-                        if (data.status) {
-                            $("#rs-edit-room").html('');
-                            $("#rs-edit-room").attr('class', 'alert alert-success');
-                            $("#rs-edit-room").html(data.text);
-
-                            generate_datatable();
-                        } else {
-                            $("#rs-edit-room").html('');
-                            $("#rs-edit-room").attr('class', 'alert alert-danger');
-                            $("#rs-edit-room").html(`!Error ${data.text}`);
-                        }
-                    },
-                    error: function(jhx, status, error) {
-                        console.log(`${jhx}, ${status}, ${error}`);
-                    }
-                });
-            }
-
-            return false;
-        });
     });
 </script>

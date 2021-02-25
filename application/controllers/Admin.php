@@ -127,7 +127,9 @@ class Admin extends CI_Controller
     public function tester_total()
     {
         $this->load->model('main_model');
+        $this->load->model('admin_model');
         $data['title'] = 'RTES';
+        $data['round'] = $this->admin_model->get_round_list()->result();
         $this->load->view('foundation_view/admin_header_view', $data);
         $this->load->view('admin_view/tester_total', $data);
         $this->load->view('foundation_view/admin_footer_view');
@@ -136,7 +138,8 @@ class Admin extends CI_Controller
     public function ajax_tester_total()
     {
         $this->load->model('admin_model');
-        $result = $this->admin_model->tester_total()->result();
+        $round = $this->input->post('round', true);
+        $result = $this->admin_model->tester_total($round)->result();
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($result));
