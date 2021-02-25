@@ -31,8 +31,12 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/results/
 
 user_guide
+
 assets/PDF_generate/*.pdf
 !assets/PDF_generate
-assets/log/*
+assets/log/*.log
 !assets/log
+assets/score_file/*
+!assets/score_file/index.html
+
 application/config/database.php
