@@ -98,11 +98,7 @@ class CI_DB_pdo_pgsql_driver extends CI_DB_pdo_driver {
 
 			if ( ! empty($this->username))
 			{
-<<<<<<< HEAD
 				$this->dsn .= ';user='.$this->username;
-=======
-				$this->dsn .= ';username='.$this->username;
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 				empty($this->password) OR $this->dsn .= ';password='.$this->password;
 			}
 		}

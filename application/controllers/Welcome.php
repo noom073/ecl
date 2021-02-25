@@ -22,12 +22,9 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
-<<<<<<< HEAD
 
 	public function form()
 	{
 		$this->load->view('pdf_form/test_register_form');
 	}
-=======
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 }

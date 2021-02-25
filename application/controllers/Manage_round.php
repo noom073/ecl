@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 defined('BASEPATH') or exit('No direct script access allowed');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -10,21 +9,11 @@ class Manage_round extends CI_Controller
 
     public function __construct()
     {
-=======
-defined('BASEPATH') OR exit('No direct script access allowed');
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
-class Manage_round extends CI_Controller {
-
-    public function __construct() {
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         parent::__construct();
 
         $this->load->helper('url');
         $this->load->library('session_lib');
         $this->load->library('secure_lib');
-<<<<<<< HEAD
         $tokenStatus = $this->session_lib->check_ecl_token();
         if (!$tokenStatus) redirect('main/index');
     }
@@ -45,30 +34,10 @@ class Manage_round extends CI_Controller {
 
         $rounds = $this->manage_round_model->list_rounds()->result_array();
         $info = [];
-=======
-
-        $this->session_lib->check_session_age();
-    }
-
-	public function index() {
-
-        $data['thisYear'] = date("Y")+543;
-        $data['title'] = 'RTES';
-		$this->load->view('foundation_view/admin_header_view', $data);
-		$this->load->view('manage_round_view/manage_round_index', $data);
-		$this->load->view('foundation_view/admin_footer_view');
-    }
-    
-    public function ajax_list_rounds() {
-        $this->load->model('manage_round_model');
-
-        $rounds = $this->manage_round_model->list_rounds()->result_array();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         foreach ($rounds as $r) {
             $r['enc_id'] = $this->secure_lib->makeSecure($r['row_id'], 'enc');
             $info[] = $r;
         }
-<<<<<<< HEAD
         // $info = (isset($info)) ? $info = $info : $info = [];
         $this->output
             ->set_content_type('application/json')
@@ -84,21 +53,6 @@ class Manage_round extends CI_Controller {
         $data['date']       = $date;
         $hour               = (strlen($this->input->post('hour')) == 1) ? "0{$this->input->post('hour')}" : $this->input->post('hour');
         $minute             = (strlen($this->input->post('minute')) == 1) ? "0{$this->input->post('minute')}" : $this->input->post('minute');
-=======
-
-        $info = ( isset($info) ) ? $info = $info : $info = [];
-        echo json_encode($info); 
-    }
-
-    public function ajax_create_round() {
-        $this->load->model('manage_round_model');
-
-        $mixDate            = explode("-", $this->input->post('date'));
-        $date               = $mixDate[2]-543 ."-$mixDate[1]-$mixDate[0]";
-        $data['date']       = $date;
-        $hour               = ( strlen($this->input->post('hour')) == 1) ? "0{$this->input->post('hour')}" : $this->input->post('hour');
-        $minute             = ( strlen($this->input->post('minute')) == 1) ? "0{$this->input->post('minute')}" : $this->input->post('minute');
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $data['time']       = "$hour:$minute:00";
         $data['room_id']    = $this->secure_lib->makeSecure($this->input->post('room'), 'dec');
         $year               = $this->input->post('year');
@@ -116,56 +70,33 @@ class Manage_round extends CI_Controller {
                 $result['status']   = false;
                 $result['text']     = 'บันทึกข้อมูลไม่ได้';
             }
-<<<<<<< HEAD
-=======
-            
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         } else {
             $result['status']   = false;
             $result['text']     = 'บันทึกข้อมูลไม่ได้ มีรอบการทดสอบนี้แล้ว';
         }
-<<<<<<< HEAD
         echo json_encode($result);
     }
 
     public function ajax_list_room()
     {
-=======
-        
-        echo json_encode($result);
-    }
-
-    public function ajax_list_room() {
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->load->model('manage_round_model');
         $room = $this->manage_round_model->list_room()->result_array();
         foreach ($room as $r) {
             $r['enc_id'] = $this->secure_lib->makeSecure($r['row_id'], 'enc');
             $info[] = $r;
         }
-<<<<<<< HEAD
         $info = (isset($info)) ? $info = $info : $info = [];
         echo json_encode($info);
     }
 
     public function round_detail($id)
     {
-=======
-
-        $info = ( isset($info) ) ? $info = $info : $info = [];
-
-        echo json_encode($info);
-    }
-
-    public function round_detail($id) {
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->load->model('manage_round_model');
 
         $dec_id = $this->secure_lib->makeSecure($id, 'dec');
         $data['round_detail'] = $this->manage_round_model->get_round_detail($dec_id)->row();
     }
 
-<<<<<<< HEAD
     public function ajax_update_round()
     {
         $this->load->model('manage_round_model');
@@ -181,21 +112,6 @@ class Manage_round extends CI_Controller {
         $data['room']       = $this->secure_lib->makeSecure($this->input->post('room'), 'dec');
         $data['round_id']   = $this->secure_lib->makeSecure($this->input->post('round_id'), 'dec');
         $data['totalSeat'] = $this->input->post('amount_seat');
-=======
-    public function ajax_update_round() {
-        $this->load->model('manage_round_model');
-
-        $d = substr($this->input->post('date'), 0,2);
-        $m = substr($this->input->post('date'), 3, 2);
-        $y = substr($this->input->post('date'), 6,4) - 543;
-
-        $data['date']       = "{$y}-{$m}-{$d}";
-        $data['hour']       = $retVal = (strlen($this->input->post('hour')) == 1) ? "0".$this->input->post('hour') : $this->input->post('hour');
-        $data['minute']     = $retVal = (strlen($this->input->post('minute')) == 1) ? "0".$this->input->post('minute') : $this->input->post('minute');
-        $data['round']      = $this->input->post('round');
-        $data['room']       = $this->secure_lib->makeSecure($this->input->post('room'), 'dec');
-        $data['round_id']   = $this->secure_lib->makeSecure($this->input->post('round_id'), 'dec');
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 
         $update = $this->manage_round_model->update_round($data);
         if ($update) {
@@ -205,7 +121,6 @@ class Manage_round extends CI_Controller {
             $result['status']   = false;
             $result['text']     = 'บันทึกข้อมูลไม่ได้';
         }
-<<<<<<< HEAD
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($result));
@@ -213,13 +128,6 @@ class Manage_round extends CI_Controller {
 
     public function ajax_get_registered_data()
     {
-=======
-        
-        echo json_encode($result);
-    }
-
-    public function ajax_get_registered_data() {
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->load->model('manage_round_model');
 
         $dec_round_id = $this->secure_lib->makeSecure($this->input->post('round'), 'dec');
@@ -229,7 +137,6 @@ class Manage_round extends CI_Controller {
             $info[] = $r;
         }
 
-<<<<<<< HEAD
         $info = (isset($info)) ? $info = $info : $info = [];
 
         echo json_encode($info);
@@ -309,113 +216,22 @@ class Manage_round extends CI_Controller {
 
     public function ajax_disable_round()
     {
-=======
-        $info = ( isset($info) ) ? $info = $info : $info = [];
-
-        echo json_encode($info);
-
-    }
-
-    public function ajax_close_seat() {
-        $this->load->model('manage_round_model');
-
-        $seat = $this->input->post('seat');
-        if ( $seat != null ) {
-            foreach ($seat as $id) {
-                $seat_id = $this->secure_lib->makeSecure($id, 'dec');
-                $update = $this->manage_round_model->disable_seat($seat_id);
-    
-                if ($update) {
-                    $data['pass'][] = $seat_id;
-                } else {
-                    $data['fail'][] = $seat_id;
-                }            
-            }
-        } else {
-            $data['pass'][] = '';
-            $data['fail'][] = '';
-        }
-        
-        
-        echo json_encode($data);
-    }
-
-    public function ajax_open_seat() {
-        $this->load->model('manage_round_model');
-
-        $seat = $this->input->post('seat');
-        if ( $seat != null ) {            
-            foreach ($seat as $id) {
-                $seat_id = $this->secure_lib->makeSecure($id, 'dec');
-                $update = $this->manage_round_model->enable_seat($seat_id);
-    
-                if ($update) {
-                    $data['pass'][] = $seat_id;
-                } else {
-                    $data['fail'][] = $seat_id;
-                }            
-            }
-
-        } else {
-            $data['pass'][] = '';
-            $data['fail'][] = '';
-        }
-        
-        echo json_encode($data);
-    }
-
-    public function ajax_clear_seat() {
-        $this->load->model('manage_round_model');
-
-        $seat = $this->input->post('seat');
-        if ( $seat != null ) {            
-            foreach ($seat as $id) {
-                $seat_id = $this->secure_lib->makeSecure($id, 'dec');
-                $this->write_clear_seat($seat_id);
-                $update = $this->manage_round_model->clear_seat($seat_id);
-    
-                if ($update) {
-                    $data['pass'][] = $seat_id;
-                } else {
-                    $data['fail'][] = $seat_id;
-                }            
-            }
-
-        } else {
-            $data['pass'][] = '';
-            $data['fail'][] = '';
-        }
-        
-        echo json_encode($data);
-    }
-
-    public function ajax_disable_round() {
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->load->model('manage_round_model');
 
         $round_id = $this->input->post('round_id');
         $id = $this->secure_lib->makeSecure($round_id, 'dec');
         $update = $this->manage_round_model->disable_round($id);
-<<<<<<< HEAD
 
         echo json_encode($update);
     }
 
     public function ajax_enable_round()
     {
-=======
-        
-        echo json_encode($update);
-    }
-
-    public function ajax_enable_round() {
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->load->model('manage_round_model');
 
         $round_id = $this->input->post('round_id');
         $id = $this->secure_lib->makeSecure($round_id, 'dec');
         $update = $this->manage_round_model->enable_round($id);
-<<<<<<< HEAD
 
         echo json_encode($update);
     }
@@ -427,18 +243,6 @@ class Manage_round extends CI_Controller {
         $filename = FCPATH . "assets/log/" . date("Y-m") . "-clear-seat.log";
         $file = fopen($filename, "a");
         $txt = date("Y-m-d H:i:s") . ",{$detail['idp']},{$detail['name']},{$detail['unit_name']},{$detail['seat_number']}";
-=======
-        
-        echo json_encode($update);
-    }
-
-    private function write_clear_seat($id) {
-        $this->load->model('manage_round_model');
-        $detail = $this->manage_round_model->get_register_detail($id)->row_array();
-        $filename = FCPATH."assets/log/".date("Y-m") ."-clear-seat.log";
-        $file = fopen($filename, "a");
-        $txt = date("Y-m-d H:i:s") .",{$detail['idp']},{$detail['name']},{$detail['unit_name']},{$detail['seat_number']}";
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $txt .= ",{$detail['date_test']},{$detail['time_test']},{$detail['round']},{$detail['room_name']}";
         $txt .= ",{$this->session->username}#{$this->input->ip_address()} clear";
         $txt .= PHP_EOL;
@@ -446,12 +250,8 @@ class Manage_round extends CI_Controller {
         fclose($file);
     }
 
-<<<<<<< HEAD
     public function generate_excel($round_id)
     {
-=======
-    public function generate_excel($round_id) {
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->load->model('manage_round_model');
 
         $dec_round_id   = $this->secure_lib->makeSecure($round_id, 'dec');
@@ -468,18 +268,13 @@ class Manage_round extends CI_Controller {
             $data['time_test']      = $r['time_test'];
             $member[] = $data;
         }
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getActiveSheet()->fromArray($member, null, 'A1');
         $filename = 'Register.xlsx';
         $writer = new Xlsx($spreadsheet);
 
         header('Content-Type: application/vnd.ms-excel');
-<<<<<<< HEAD
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
 
@@ -488,15 +283,6 @@ class Manage_round extends CI_Controller {
 
     public function ajax_delete_round()
     {
-=======
-        header('Content-Disposition: attachment;filename="'. $filename .'"'); 
-        header('Cache-Control: max-age=0');
-        
-        $writer->save('php://output'); // download file  
-    }
-
-    public function ajax_delete_round() {
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
         $this->load->model('manage_round_model');
 
         $round_id       = $this->input->post('round_id');
@@ -518,8 +304,4 @@ class Manage_round extends CI_Controller {
 
         echo json_encode($result);
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 }

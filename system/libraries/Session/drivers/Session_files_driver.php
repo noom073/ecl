@@ -135,22 +135,14 @@ class CI_Session_files_driver extends CI_Session_driver implements SessionHandle
 		{
 			if ( ! mkdir($save_path, 0700, TRUE))
 			{
-<<<<<<< HEAD
 				log_message('error', "Session: Configured save path '".$this->_config['save_path']."' is not a directory, doesn't exist or cannot be created.");
 				return $this->_failure;
-=======
-				throw new Exception("Session: Configured save path '".$this->_config['save_path']."' is not a directory, doesn't exist or cannot be created.");
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 			}
 		}
 		elseif ( ! is_writable($save_path))
 		{
-<<<<<<< HEAD
 			log_message('error', "Session: Configured save path '".$this->_config['save_path']."' is not writable by the PHP process.");
 			return $this->_failure;
-=======
-			throw new Exception("Session: Configured save path '".$this->_config['save_path']."' is not writable by the PHP process.");
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 		}
 
 		$this->_config['save_path'] = $save_path;

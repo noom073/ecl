@@ -33,7 +33,6 @@
                     <li id="admin-search" class="nav-item">
                         <a class="nav-link" href="<?= site_url('search/index') ?>">ค้นหาคะแนน</a>
                     </li> 
-<<<<<<< HEAD
                     <li id="admin-check-user" class="nav-item">
                         <a class="nav-link" href="<?= site_url('admin_check_user/index') ?>">ตรวจสอบผู้สมัครสอบ</a>
                     </li>
@@ -43,8 +42,6 @@
                     <li id="admin-manage-user" class="nav-item">
                         <a class="nav-link" href="<?= site_url('admin/manage_user') ?>">จัดการรายชื่อ Admin</a>
                     </li>
-=======
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
                     <li id="admin-view-log" class="nav-item">
                         <a class="nav-link" href="<?= site_url('view_log/index') ?>">Log</a>
                     </li>                  

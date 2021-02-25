@@ -81,7 +81,6 @@ class CI_DB_oci8_forge extends CI_DB_forge {
 	 */
 	protected $_unsigned		= FALSE;
 
-<<<<<<< HEAD
 	/**
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
@@ -89,8 +88,6 @@ class CI_DB_oci8_forge extends CI_DB_forge {
 	 */
 	protected $_null		= 'NULL';
 
-=======
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 	// --------------------------------------------------------------------
 
 	/**

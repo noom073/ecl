@@ -30,14 +30,9 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/tests/
 /tests/results/
 
-<<<<<<< HEAD
 user_guide
-assets/PDF_generate/*
-!assets/PDF_generate
+# assets/PDF_generate/*
+# !assets/PDF_generate
 assets/log/*
 !assets/log
 application/config/database.php
-=======
-application/config/database.php
-user_guide
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b

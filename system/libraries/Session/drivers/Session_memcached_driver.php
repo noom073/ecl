@@ -117,11 +117,7 @@ class CI_Session_memcached_driver extends CI_Session_driver implements SessionHa
 		{
 			$this->_memcached = NULL;
 			log_message('error', 'Session: Invalid Memcached save path format: '.$this->_config['save_path']);
-<<<<<<< HEAD
 			return $this->_failure;
-=======
-			return $this->_fail();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 		}
 
 		foreach ($matches as $match)
@@ -146,11 +142,7 @@ class CI_Session_memcached_driver extends CI_Session_driver implements SessionHa
 		if (empty($server_list))
 		{
 			log_message('error', 'Session: Memcached server pool is empty.');
-<<<<<<< HEAD
 			return $this->_failure;
-=======
-			return $this->_fail();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 		}
 
 		$this->php5_validate_id();
@@ -180,11 +172,7 @@ class CI_Session_memcached_driver extends CI_Session_driver implements SessionHa
 			return $session_data;
 		}
 
-<<<<<<< HEAD
 		return $this->_failure;
-=======
-		return $this->_fail();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 	}
 
 	// ------------------------------------------------------------------------
@@ -202,22 +190,14 @@ class CI_Session_memcached_driver extends CI_Session_driver implements SessionHa
 	{
 		if ( ! isset($this->_memcached, $this->_lock_key))
 		{
-<<<<<<< HEAD
 			return $this->_failure;
-=======
-			return $this->_fail();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 		}
 		// Was the ID regenerated?
 		elseif ($session_id !== $this->_session_id)
 		{
 			if ( ! $this->_release_lock() OR ! $this->_get_lock($session_id))
 			{
-<<<<<<< HEAD
 				return $this->_failure;
-=======
-				return $this->_fail();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 			}
 
 			$this->_fingerprint = md5('');
@@ -235,11 +215,7 @@ class CI_Session_memcached_driver extends CI_Session_driver implements SessionHa
 				return $this->_success;
 			}
 
-<<<<<<< HEAD
 			return $this->_failure;
-=======
-			return $this->_fail();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 		}
 		elseif (
 			$this->_memcached->touch($key, $this->_config['expiration'])
@@ -249,11 +225,7 @@ class CI_Session_memcached_driver extends CI_Session_driver implements SessionHa
 			return $this->_success;
 		}
 
-<<<<<<< HEAD
 		return $this->_failure;
-=======
-		return $this->_fail();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 	}
 
 	// ------------------------------------------------------------------------
@@ -272,22 +244,14 @@ class CI_Session_memcached_driver extends CI_Session_driver implements SessionHa
 			$this->_release_lock();
 			if ( ! $this->_memcached->quit())
 			{
-<<<<<<< HEAD
 				return $this->_failure;
-=======
-				return $this->_fail();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 			}
 
 			$this->_memcached = NULL;
 			return $this->_success;
 		}
 
-<<<<<<< HEAD
 		return $this->_failure;
-=======
-		return $this->_fail();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 	}
 
 	// ------------------------------------------------------------------------
@@ -309,11 +273,7 @@ class CI_Session_memcached_driver extends CI_Session_driver implements SessionHa
 			return $this->_success;
 		}
 
-<<<<<<< HEAD
 		return $this->_failure;
-=======
-		return $this->_fail();
->>>>>>> e2d40a59919f96660da7aa7f439cf679458af65b
 	}
 
 	// ------------------------------------------------------------------------
