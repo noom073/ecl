@@ -36,7 +36,7 @@ assets/PDF_generate/*.pdf
 !assets/PDF_generate
 assets/log/*.log
 !assets/log
-assets/score_file/*
+assets/score_file
 !assets/score_file/index.html
 
 application/config/database.php
