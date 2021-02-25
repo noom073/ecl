@@ -112,6 +112,7 @@ class Admin_model extends CI_Model
                 select count(*)
                 from ecl2_register
                 where round_id = b.row_id
+                and idp is not null
             ) as total_tester, 
             (
                 select count(*)
