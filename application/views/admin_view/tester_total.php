@@ -64,7 +64,7 @@
 
 
         let dataTable = $("#ecl-table").DataTable({
-            responsive: true,
+            // responsive: true,
             columns: [{
                     data: null,
                     className: "text-center",
