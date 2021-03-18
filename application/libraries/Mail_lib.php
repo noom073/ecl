@@ -18,7 +18,8 @@ class Mail_lib
         $mail->SMTPAuth     = true;
         $mail->SMTPSecure   = "tls";
         $mail->SMTPOptions  = array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true));
-        $mail->Host         = "intmail.rtarf.mi.th";
+        // $mail->Host         = "intmail.rtarf.mi.th";
+        $mail->Host         = "mail.rtarf.mi.th";
         $mail->Port         = 587;
         $mail->Username     = "mildoc@rtarf.mi.th";
         $mail->Password     = "xje7Cjma";
