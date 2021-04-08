@@ -306,4 +306,13 @@ class Main_model extends CI_Model
         $y = $mixDate[0]+543;
         return "{$d} {$m} {$y}";        
     }
+
+    public function check_score_extend($idp)
+    {        
+        $sql = "select exam_name, adate, user_fname, ascore, full_score 
+            from ecl2_external_score
+            where user_pid = ?
+            order by adate desc";
+        return $this->mysql->query($sql, array($idp));
+    }
 }

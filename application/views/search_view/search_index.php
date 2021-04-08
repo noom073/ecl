@@ -2,10 +2,7 @@
     <div class="main container-fluid">
         <div class="">
             <div class="bg-white m-2 p-2">
-                <div class="h2">รายการห้องสอบ</div>
-                <div class="">
-                    <a class="btn btn-sm btn-primary" href="<?= site_url('score/index') ?>">อัพโหลดคะแนน</a>
-                </div>
+                <div class="h2">ค้นหาคะแนน</div>
             </div>
 
             <div class="m-2 p-2">

@@ -127,6 +127,45 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="card">
+                        <div class="card-header my-bg-blue" id="check-score-extend">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link collapsed text-white" type="button" data-toggle="collapse" data-target="#check-score-contain-extend" aria-expanded="false" aria-controls="check-score-contain">
+                                    <div class="h4">ผลการทดสอบ เพิ่มเติม</div>
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="check-score-contain-extend" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <form id="check-score-extend-form">
+                                    <div class="form-group">
+                                        <label>หมายเลขบัตรประจำตัวประชาชน</label>
+                                        <input type="text" class="form-control col-md-4" name="idp" maxlength="13">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+
+                                <div id="check-score-extend-detail" class="my-2"></div>
+
+                                <div class="my-2 table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ชื่อ นามสกุล</th>
+                                                <th>ประเภทการสอบ</th>
+                                                <th>เวลา</th>
+                                                <th>คะแนนที่ได้</th>
+                                                <th>คะแนนเต็ม</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="score-extend-table"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -475,5 +514,51 @@
             }
         });
 
+        $("#check-score-extend-form").submit(function() {
+            var formData = $(this).serialize();
+
+            $("#check-score-extend-detail").html(`กำลังโหลด ... <div class="spinner-border text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>`);
+
+            $.ajax({
+                url: "<?= site_url('main/ajax_check_score_extend') ?>",
+                data: formData,
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+                    if (data.status == true) {
+                        $("#check-score-extend-detail").html('');
+                        $("#check-score-extend-detail").attr('class', 'my-2 alert alert-info');
+                        $("#check-score-extend-detail").html(`${data.text}`);
+                        $("#score-extend-table").html('');
+
+                        var tr = '';
+                        data.score.forEach(function(element) {
+                            tr += `<tr>` +
+                                `<td>${element.user_fname}</td>` +
+                                `<td>${element.exam_name}</td>` +
+                                `<td>${element.adate}</td>` +
+                                `<td>${element.ascore}</td>` +
+                                `<td>${element.full_score}</td>` +
+                                `</tr>`;
+                            $("#score-extend-table").html(tr);
+                        });
+
+                    } else {
+                        $("#score-extend-table").html('');
+                        $("#check-score-extend-detail").html('');
+                        $("#check-score-extend-detail").attr('class', 'my-2 alert alert-danger');
+                        $("#check-score-extend-detail").html(`! ${data.text}`);
+                    }
+                },
+                error: function(jhx, status, error) {
+                    console.log(`${jhx}, ${status}, ${error}`);
+                }
+            });
+
+            return false;
+        });
     });
 </script>

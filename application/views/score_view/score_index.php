@@ -2,7 +2,7 @@
     <div class="main container-fluid">
         <div class="">
             <div class="bg-white m-2 p-2">
-                <div class="h2">รายการห้องสอบ</div>
+                <div class="h2">อัพโหลดคะแนนผู้สอบ</div>
                 <div class="">
                     <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#import-score-Modal">+ อัพโหลดคะแนน</button>
                 </div>
@@ -67,7 +67,8 @@
     $(document).ready(function() {
 
         $(".nav-item").removeClass('active');
-        $("#admin-score.nav-item").addClass('active');
+        $("#admin-score").addClass('active');
+        $("#admin-score-upload").addClass('active');
 
         $("#upload-score-form").submit(function() {
             $("#rs").html(`กำลังโหลด ... <div class="spinner-border text-success" role="status">

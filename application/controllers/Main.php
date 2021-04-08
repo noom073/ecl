@@ -324,4 +324,23 @@ class Main extends CI_Controller
         fwrite($file, $txt);
         fclose($file);
     }
+
+    public function ajax_check_score_extend()
+    {
+        $this->load->model('main_model');
+
+        $idp = $this->input->post('idp');
+        $data = $this->main_model->check_score_extend($idp);
+        if ($data->num_rows() > 0) {
+            $result['status']   = true;
+            $result['text']     = "พบข้อมูล";
+            $result['score']    = $data->result_array();
+        } else {
+            $result['status']   = false;
+            $result['text']     = "ไม่พบข้อมูล";
+        }
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+    }
 }
