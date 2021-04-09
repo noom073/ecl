@@ -110,14 +110,27 @@ class Score extends CI_Controller
 
     public function ajax_get_external_jarmy_score()
     {
+        $result = array(
+            'scores' => array(),
+            'lastestDate' => '',
+            'updateStatus' => ''
+        );
+        $scoreData = [];
+        $insertScore = [];
         // ----------------- Insert Score Process -------------------
         $getLocalLastID = $this->score_model->get_local_external_lastID();
         $lastID = ($getLocalLastID->row_array()['id'] == null) ? 0 : $getLocalLastID->row_array()['id'];
-        $externalScore = $this->score_model->get_external_score($lastID)->result_array();
-        $insertScore = $this->score_model->insert_external_scores($externalScore);
+        $externalScore = $this->score_model->get_external_score($lastID);
+        if ($externalScore->num_rows() > 0) {
+            $scoreData = $externalScore->result_array();
+            $insertScore = $this->score_model->insert_external_scores($scoreData);
+            $updateStatus = 'พบข้อมูลที่ยังไม่ได้อัพเดต';
+        } else {
+            $updateStatus = 'มีข้อมูลล่าสุดแล้ว';
+        }
         // End ----------------- Insert Score Process -------------------
 
-        // ----------------- Get lastest date -------------------
+        // ----------------- Get lastest update -------------------
         $getLocalLastID = $this->score_model->get_local_external_lastID();
         $lastID = ($getLocalLastID->row_array()['id'] == null) ? 0 : $getLocalLastID->row_array()['id'];
         $getlastestData = $this->score_model->get_local_external_last_data($lastID);
@@ -130,6 +143,7 @@ class Score extends CI_Controller
 
         $result['scores'] = $insertScore;
         $result['lastestDate'] = $lastestDate;
+        $result['updateStatus'] = $updateStatus;
 
         $this->output
             ->set_content_type('application/json')

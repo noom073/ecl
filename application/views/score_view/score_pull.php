@@ -6,13 +6,14 @@
                 <div class="">
                     <button id="pulling-score-btn" class="btn btn-sm btn-primary">+ Update Data</button>
                     <small class="d-block mt-1">
-                        Lastest updated:
+                        Lastest update:
                         <span id="lastest-updated" class="text-danger"><?= $lastestDate ?></span>
                     </small>
                 </div>
             </div>
 
             <div class="m-2 p-2">
+                <div id="update-status"></div>
                 <div id="success-datail"></div>
                 <div id="failure-datail"></div>
             </div>
@@ -71,7 +72,14 @@
                         $("#failure-datail").prop('class', 'alert alert-warning');
                         $("#failure-datail").html(html);
                     }
+                } else {
+                    $("#success-datail").prop('class', '');
+                    $("#success-datail").html('');
+                    $("#failure-datail").prop('class', '');
+                    $("#failure-datail").html('');
                 }
+                $("#update-status").prop('class', 'alert alert-info');
+                $("#update-status").text(res.updateStatus);
                 $("#lastest-updated").text(res.lastestDate);
                 thisBtn.prop('disabled', false);
             }).fail((jhr, status, error) => console.error(jhr, status, error));

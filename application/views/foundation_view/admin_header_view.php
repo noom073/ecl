@@ -38,7 +38,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="admin-score">
                         <a id="admin-score-upload" class="dropdown-item" href="<?= site_url('score/index') ?>">อัพโหลดคะแนนผู้สอบ</a>
-                        <a id="admin-score-ext-pulling" class="dropdown-item" href="<?= site_url('score/external_pulling') ?>">Another action</a>
+                        <a id="admin-score-ext-pulling" class="dropdown-item" href="<?= site_url('score/external_pulling') ?>">Update คะแนนผู้สอบ จากบริษัท</a>
                     </div>
                 </li>
                 <li id="admin-search" class="nav-item">
